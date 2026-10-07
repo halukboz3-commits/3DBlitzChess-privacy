@@ -1,8 +1,24 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>3DBlitzChess – Delete your account / Hesabını sil</title>
-<style>body{font-family:system-ui,Arial,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#222}h1,h2{color:#5a1a14}</style></head><body>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3DBlitzChess – Delete your account</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;max-width:760px;margin:0 auto;padding:1rem;line-height:1.55;color:#222}
+  h1,h2{color:#5a1a14} h1{font-size:1.6rem;margin-top:.4rem}
+  .langbar{display:flex;gap:.4rem;justify-content:flex-end;position:sticky;top:0;background:#fff;padding:.5rem 0;border-bottom:1px solid #eee}
+  .langbar button{border:1px solid #5a1a14;background:#fff;color:#5a1a14;padding:.3rem .9rem;border-radius:6px;font-weight:600;cursor:pointer}
+  .langbar button.on{background:#5a1a14;color:#fff}
+</style>
+</head>
+<body>
+<div class="langbar">
+  <button id="b-en" class="on" onclick="setLang('en')">EN</button>
+  <button id="b-tr" onclick="setLang('tr')">TR</button>
+</div>
 
+<div id="en">
 <h1>3DBlitzChess – Delete your account</h1>
 <h2>In the app (fastest)</h2>
 <ol>
@@ -11,13 +27,13 @@
 <li>Confirm. Your account is deleted immediately.</li>
 </ol>
 <h2>By e-mail</h2>
-<p>If you cannot open the app, e-mail <strong>[YOUR E-MAIL]</strong> from the address you registered with, with the subject “Delete my 3DBlitzChess account”. We will delete your account within 30 days.</p>
+<p>If you cannot open the app, e-mail <a href="mailto:rasetmengine@hotmail.com?subject=Delete%20my%203DBlitzChess%20account">rasetmengine@hotmail.com</a> from the address you registered with, with the subject “Delete my 3DBlitzChess account”. We will delete your account within 30 days.</p>
 <h2>What is deleted</h2>
 <p>Your profile (name, e-mail link), ratings, win/loss statistics, tournament entries and matchmaking data. Past games may remain without any link to your name. Local preferences stay on your device until you uninstall the app.</p>
-<p><a href="privacy.html">Privacy Policy</a></p>
+<p><a class="cross" data-base="privacy.html" href="privacy.html">Privacy Policy</a></p>
+</div>
 
-<hr>
-
+<div id="tr" hidden>
 <h1>3DBlitzChess – Hesabını sil</h1>
 <h2>Uygulama içinden (en hızlı)</h2>
 <ol>
@@ -26,8 +42,29 @@
 <li>Onayla. Hesabın hemen silinir.</li>
 </ol>
 <h2>E-posta ile</h2>
-<p>Uygulamayı açamıyorsan, kayıtlı e-posta adresinden <strong>[E-POSTANIZ]</strong> adresine “3DBlitzChess hesabımı sil” konulu bir e-posta gönder. Hesabını 30 gün içinde sileriz.</p>
+<p>Uygulamayı açamıyorsan, kayıtlı e-posta adresinden <a href="mailto:rasetmengine@hotmail.com?subject=3DBlitzChess%20hesab%C4%B1m%C4%B1%20sil">rasetmengine@hotmail.com</a> adresine “3DBlitzChess hesabımı sil” konulu bir e-posta gönder. Hesabını 30 gün içinde sileriz.</p>
 <h2>Neler silinir</h2>
 <p>Profilin (ad, e-posta bağlantısı), rating'lerin, galibiyet/mağlubiyet istatistiklerin, turnuva kayıtların ve eşleşme verilerin. Geçmiş maçlar adına bağlı olmadan kalabilir. Cihazındaki yerel tercihler uygulamayı kaldırana kadar durur.</p>
-<p><a href="privacy.html">Gizlilik Politikası</a></p>
-</body></html>
+<p><a class="cross" data-base="privacy.html" href="privacy.html">Gizlilik Politikası</a></p>
+</div>
+
+<script>
+function setLang(l){
+  l = (l === 'tr') ? 'tr' : 'en';
+  document.getElementById('en').hidden = (l !== 'en');
+  document.getElementById('tr').hidden = (l !== 'tr');
+  document.getElementById('b-en').className = (l === 'en') ? 'on' : '';
+  document.getElementById('b-tr').className = (l === 'tr') ? 'on' : '';
+  document.documentElement.lang = l;
+  document.title = (l === 'tr') ? '3DBlitzChess – Hesabını sil' : '3DBlitzChess – Delete your account';
+  document.querySelectorAll('a.cross').forEach(function(a){ a.href = a.dataset.base + '#' + l; });
+  if (history.replaceState) history.replaceState(null, '', '#' + l);
+}
+(function(){
+  var q = new URLSearchParams(location.search).get('lang');
+  var h = location.hash.replace('#','');
+  setLang((q || h || 'en').toLowerCase());
+})();
+</script>
+</body>
+</html>
